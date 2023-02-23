@@ -6,7 +6,6 @@ int bsearch(int k,vector<int> &v,int start,int stop){
     if (stop - start <= 1) {
         return k >= v[stop] ? stop : k >= v[start] ? start : -1;
     }
-    //cout << v[start] << " " << v[stop] << "\n";
     int m = (start + stop) >> 1;
     if (k >= v[m]) bsearch(k,v,m,stop);
     else bsearch(k,v,start,m);

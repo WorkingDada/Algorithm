@@ -1,37 +1,36 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
-#include <string>
 #include <map>
-
 using namespace std;
 
-void perm(int n,vector<int> &sol,int len,int k){
-    if (len < k){
-        for (int i = 0 ; i < n ; i++){
-            sol[len] = i;
-            perm(n,sol,len+1,k);
+
+void permu(int n,int len,vector<bool> &used,map<int,int> &mp,string sol=""){
+    if (len < n){
+        for (int i=0;i<n;i++){
+            if (used[i] == false && (mp.find(i) == mp.end() || used[mp[i]])){
+                used[i] = true;
+                permu(n,len+1,used,mp,sol+to_string(i)+" ");
+                used[i] = false;
+            } 
         }
     } else {
-        for (auto &x : sol){
-            cout << x;
-        }
-        cout << "\n";
+        sol.pop_back();
+        cout << sol << "\n";
     }
 }
 
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    int n,m,t1,t2;
+    int n,m;
+    int t1,t2;
     cin >> n >> m;
-    vector<int> sol(n);
-    map<int,int> mp1;
-    while (m--){
+    vector<bool> used(n,false);
+    map<int,int> mp;
+    while(m--){
         cin >> t1 >> t2;
-        mp1[t2] = t1;
+        mp[t2] = t1;
     }
-    perm(n,sol,0,n);
-    for (auto &x : mp1){
-        cout << x.first << " ";
-    }
+    permu(n,0,used,mp);
 }

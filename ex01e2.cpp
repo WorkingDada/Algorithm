@@ -2,28 +2,29 @@
 #include <vector>
 using namespace std;
 
-int bsearch_near(int k,vector<int> &v){
-    if (k > v[v.size()-1]) return v[v.size()-1];
-    if (k < v[0]) return -1;
-    if (k == v[0]) return k;
-    for (int i = v.size()-1 ; i >= 0 ; i--){
-        if (k >= v[i]){
-            return v[i];
-        }
+int max_contiguous_sum_prefix(vector<int>& arr) {
+    int n = arr.size();
+    vector<int> prefix_sum(n);
+    prefix_sum[0] = arr[0];
+    for (int i = 1; i < n; i++) {
+        prefix_sum[i] = prefix_sum[i-1] + arr[i];
     }
+    int max_sum = arr[0];
+    int min_prefix_sum = 0;
+    for (int i = 0; i < n; i++) {
+        max_sum = max(max_sum, prefix_sum[i] - min_prefix_sum);
+        min_prefix_sum = min(min_prefix_sum, prefix_sum[i]);
+    }
+    return max_sum;
 }
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    int n,m,t;
-    vector<int> v1,v2;
-    cin >> n >> m;
-    while(n--){
-        cin >> t; v1.push_back(t);
-    }
-    while(m--){
+    int n,t;
+    vector<int> v;
+    cin >> n;
+    while (n--){
         cin >> t;
-        cout << bsearch_near(t,v1) << "\n" ;
+        v.push_back(t);
     }
+    cout << max_contiguous_sum_prefix(v);
 }

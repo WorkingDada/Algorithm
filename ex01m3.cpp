@@ -15,6 +15,6 @@ int main(){
     }
     while(a--){
         cin >> i;
-
+        
     }
 }

@@ -5,7 +5,7 @@ int n,m,k;
 int table[31][31][31][2];
 
 int gen_barcode(int len,int consec,int change,int c){
-    if (len > n || consec > m || k-change > n-len) return 0;
+    if (len > n || consec >= m || k-change > n-len) return 0;
     if (table[len][consec][change][c] != 0) return table[len][consec][change][c];
     if (len == n-1) return change == k;
     if (c) {
